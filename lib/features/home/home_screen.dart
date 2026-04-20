@@ -73,19 +73,19 @@ class _HomeScreenState extends State<HomeScreen> {
             _buildAppBar(),
             SliverToBoxAdapter(child: _buildFeatured()),
             SliverToBoxAdapter(
-              child: MovieSection(title: '🔥 Em Alta', movies: _trending, isLoading: _loading),
+              child: MovieSection(title: 'Em Alta', movies: _trending, isLoading: _loading),
             ),
             SliverToBoxAdapter(
-              child: MovieSection(title: '⭐ Mais Populares', movies: _popular, isLoading: _loading),
+              child: MovieSection(title: 'Mais Populares', movies: _popular, isLoading: _loading),
             ),
             SliverToBoxAdapter(
-              child: MovieSection(title: '🏆 Mais Bem Avaliados', movies: _topRated, isLoading: _loading),
+              child: MovieSection(title: 'Mais Bem Avaliados', movies: _topRated, isLoading: _loading),
             ),
             SliverToBoxAdapter(
-              child: MovieSection(title: '🎬 Em Cartaz', movies: _nowPlaying, isLoading: _loading),
+              child: MovieSection(title: 'Em Cartaz', movies: _nowPlaying, isLoading: _loading),
             ),
             SliverToBoxAdapter(
-              child: MovieSection(title: '🚀 Em Breve', movies: _upcoming, isLoading: _loading),
+              child: MovieSection(title: 'Em Breve', movies: _upcoming, isLoading: _loading),
             ),
             const SliverToBoxAdapter(child: SizedBox(height: 20)),
           ],

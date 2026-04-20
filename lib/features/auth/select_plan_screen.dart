@@ -37,11 +37,10 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
   }
 
   Future<void> _loadPlans() async {
-    try {
-      await _firestore.seedPlans();
-    } catch (_) {}
-    final plans = await _firestore.getPlans();
-    if (mounted) setState(() { _plans = plans; _loadingPlans = false; });
+    // Usa planos locais imediatamente, sem depender do Firestore
+    if (mounted) setState(() { _plans = PlanModel.defaults; _loadingPlans = false; });
+    // Tenta seed em background para uso futuro
+    try { await _firestore.seedPlans(); } catch (_) {}
   }
 
   Future<void> _register() async {
