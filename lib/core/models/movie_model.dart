@@ -1,0 +1,44 @@
+class MovieModel {
+  final int id;
+  final String title;
+  final String overview;
+  final String posterPath;
+  final String backdropPath;
+  final double voteAverage;
+  final String releaseDate;
+  final List<int> genreIds;
+
+  MovieModel({
+    required this.id,
+    required this.title,
+    required this.overview,
+    required this.posterPath,
+    required this.backdropPath,
+    required this.voteAverage,
+    required this.releaseDate,
+    required this.genreIds,
+  });
+
+  factory MovieModel.fromJson(Map<String, dynamic> json) {
+    return MovieModel(
+      id: json['id'] ?? 0,
+      title: json['title'] ?? json['name'] ?? '',
+      overview: json['overview'] ?? '',
+      posterPath: json['poster_path'] ?? '',
+      backdropPath: json['backdrop_path'] ?? '',
+      voteAverage: (json['vote_average'] ?? 0).toDouble(),
+      releaseDate: json['release_date'] ?? json['first_air_date'] ?? '',
+      genreIds: List<int>.from(json['genre_ids'] ?? []),
+    );
+  }
+
+  String get posterUrl => posterPath.isNotEmpty
+      ? 'https://image.tmdb.org/t/p/w500$posterPath'
+      : '';
+
+  String get backdropUrl => backdropPath.isNotEmpty
+      ? 'https://image.tmdb.org/t/p/w1280$backdropPath'
+      : '';
+
+  String get year => releaseDate.length >= 4 ? releaseDate.substring(0, 4) : '';
+}

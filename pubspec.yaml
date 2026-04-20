@@ -1,0 +1,35 @@
+name: cinebox
+description: CineBox - Streaming App
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  # Firebase
+  firebase_core: ^3.6.0
+  firebase_auth: ^5.3.1
+  cloud_firestore: ^5.4.4
+  # HTTP
+  http: ^1.2.2
+  # Imagens
+  cached_network_image: ^3.4.1
+  # Navegação
+  go_router: ^14.3.0
+  # Ícones
+  cupertino_icons: ^1.0.8
+  # Shared Preferences
+  shared_preferences: ^2.3.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/images/
