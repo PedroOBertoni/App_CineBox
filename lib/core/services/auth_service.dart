@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -73,6 +74,7 @@ class AuthService {
   }
 
   String _authError(String code) {
+    debugPrint('FirebaseAuthException code: $code');
     switch (code) {
       case 'email-already-in-use': return 'E-mail já cadastrado.';
       case 'invalid-email': return 'E-mail inválido.';
@@ -80,7 +82,11 @@ class AuthService {
       case 'user-not-found': return 'Usuário não encontrado.';
       case 'wrong-password': return 'Senha incorreta.';
       case 'invalid-credential': return 'E-mail ou senha incorretos.';
-      default: return 'Erro de autenticação. Tente novamente.';
+      case 'too-many-requests': return 'Muitas tentativas. Aguarde alguns minutos.';
+      case 'user-disabled': return 'Esta conta foi desativada.';
+      case 'network-request-failed': return 'Sem conexão. Verifique sua internet.';
+      case 'INVALID_LOGIN_CREDENTIALS': return 'E-mail ou senha incorretos.';
+      default: return 'Erro ($code). Tente novamente.';
     }
   }
 }
