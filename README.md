@@ -233,6 +233,14 @@ cinebox/
 
 ---
 
+## 🏗️ Arquitetura da Aplicação
+
+O diagrama abaixo ilustra a arquitetura geral do CineBox Mobile, mostrando o fluxo de dados entre as telas, serviços, Firebase e a API externa.
+
+![Arquitetura do CineBox Mobile](./assets/images/desenho.jpeg)
+
+---
+
 ## 📸 Screenshots
 
 <table>
