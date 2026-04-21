@@ -1,6 +1,6 @@
 # 📱 CineBox Mobile
 
-> Trabalho acadêmico desenvolvido para a disciplina de **Desenvolvimento Mobile** do curso de **Análise e Desenvolvimento de Sistemas** da **Uni-FACEF — Centro Universitário Municipal de Franca**.
+> Trabalho acadêmico desenvolvido para a disciplina de **Desenvolvimento Mobile** do curso de **Engenharia de Software** da **Uni-FACEF — Centro Universitário Municipal de Franca**.
 
 ---
 
@@ -394,7 +394,7 @@ dart run flutter_launcher_icons
 | | |
 |---|---|
 | **Instituição** | Uni-FACEF — Centro Universitário Municipal de Franca |
-| **Curso** | Análise e Desenvolvimento de Sistemas |
+| **Curso** | Engenharia de Software |
 | **Disciplina** | Desenvolvimento Mobile |
 | **Ano** | 2026 |
 
