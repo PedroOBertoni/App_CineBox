@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../core/services/tmdb_service.dart';
 import '../../core/theme/app_theme.dart';
 
@@ -204,18 +206,98 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
       );
       return;
     }
-    final key = videos.first['key'];
-    showDialog(
+    final key = videos.first['key'] as String;
+    showModalBottomSheet(
       context: context,
-      builder: (_) => AlertDialog(
-        backgroundColor: AppColors.surfaceVariant,
-        title: const Text('Trailer', style: TextStyle(color: AppColors.textPrimary)),
-        content: Text(
-          'Abra no YouTube:\nhttps://youtube.com/watch?v=$key',
-          style: const TextStyle(color: AppColors.accent),
-        ),
-        actions: [
-          TextButton(onPressed: () => Navigator.pop(context), child: const Text('Fechar')),
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (_) => _TrailerSheet(videoKey: key),
+    );
+  }
+}
+
+class _TrailerSheet extends StatefulWidget {
+  final String videoKey;
+  const _TrailerSheet({required this.videoKey});
+
+  @override
+  State<_TrailerSheet> createState() => _TrailerSheetState();
+}
+
+class _TrailerSheetState extends State<_TrailerSheet> {
+  late YoutubePlayerController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = YoutubePlayerController(
+      initialVideoId: widget.videoKey,
+      flags: const YoutubePlayerFlags(autoPlay: true, mute: false),
+    );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: const BoxDecoration(
+        color: Colors.black,
+        borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          // Handle
+          Container(
+            margin: const EdgeInsets.only(top: 10, bottom: 8),
+            width: 40,
+            height: 4,
+            decoration: BoxDecoration(
+              color: Colors.white24,
+              borderRadius: BorderRadius.circular(2),
+            ),
+          ),
+          // Header
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+            child: Row(
+              children: [
+                const Icon(Icons.play_circle_fill, color: AppColors.primary, size: 20),
+                const SizedBox(width: 8),
+                const Text('Trailer', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16)),
+                const Spacer(),
+                // Botão abrir no YouTube
+                TextButton.icon(
+                  onPressed: () async {
+                    final url = Uri.parse('https://youtube.com/watch?v=${widget.videoKey}');
+                    if (await canLaunchUrl(url)) launchUrl(url, mode: LaunchMode.externalApplication);
+                  },
+                  icon: const Icon(Icons.open_in_new, size: 14, color: AppColors.textMuted),
+                  label: const Text('Abrir no YouTube', style: TextStyle(color: AppColors.textMuted, fontSize: 12)),
+                ),
+                IconButton(
+                  onPressed: () => Navigator.pop(context),
+                  icon: const Icon(Icons.close, color: Colors.white54, size: 20),
+                ),
+              ],
+            ),
+          ),
+          // Player
+          YoutubePlayer(
+            controller: _controller,
+            showVideoProgressIndicator: true,
+            progressIndicatorColor: AppColors.primary,
+            progressColors: const ProgressBarColors(
+              playedColor: AppColors.primary,
+              handleColor: AppColors.primaryLight,
+            ),
+          ),
+          const SizedBox(height: 16),
         ],
       ),
     );

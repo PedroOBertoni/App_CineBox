@@ -25,6 +25,10 @@ dependencies:
   shared_preferences: ^2.3.2
   # Google Sign In
   google_sign_in: ^6.2.1
+  # YouTube Player
+  youtube_player_flutter: ^9.1.1
+  # URL Launcher (fallback)
+  url_launcher: ^6.3.0
 
 dev_dependencies:
   flutter_test:
