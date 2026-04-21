@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -16,6 +17,7 @@ final _shellKey = GlobalKey<NavigatorState>();
 final appRouter = GoRouter(
   navigatorKey: _rootKey,
   initialLocation: '/home',
+  refreshListenable: _AuthChangeNotifier(),
   redirect: (context, state) {
     final user = FirebaseAuth.instance.currentUser;
     final isAuth = user != null;
@@ -58,3 +60,17 @@ final appRouter = GoRouter(
     ),
   ],
 );
+
+class _AuthChangeNotifier extends ChangeNotifier {
+  late final StreamSubscription<User?> _sub;
+
+  _AuthChangeNotifier() {
+    _sub = FirebaseAuth.instance.authStateChanges().listen((_) => notifyListeners());
+  }
+
+  @override
+  void dispose() {
+    _sub.cancel();
+    super.dispose();
+  }
+}

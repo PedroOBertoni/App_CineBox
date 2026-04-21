@@ -46,15 +46,14 @@ class AuthService {
     required bool rememberMe,
   }) async {
     try {
-      await _auth.setPersistence(
-        rememberMe ? Persistence.LOCAL : Persistence.SESSION,
-      );
       await _auth.signInWithEmailAndPassword(email: email, password: password);
       final prefs = await SharedPreferences.getInstance();
       await prefs.setBool('rememberMe', rememberMe);
       return null;
     } on FirebaseAuthException catch (e) {
       return _authError(e.code);
+    } catch (e) {
+      return 'Erro inesperado. Tente novamente.';
     }
   }
 

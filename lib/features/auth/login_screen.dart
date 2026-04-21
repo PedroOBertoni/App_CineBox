@@ -38,9 +38,8 @@ class _LoginScreenState extends State<LoginScreen> {
     if (!mounted) return;
     if (err != null) {
       setState(() { _error = err; _loading = false; });
-    } else {
-      context.go('/home');
     }
+    // navegação feita automaticamente pelo refreshListenable do router
   }
 
   @override
@@ -140,7 +139,11 @@ class _LoginScreenState extends State<LoginScreen> {
               labelText: 'E-mail',
               prefixIcon: Icon(Icons.email_outlined, color: AppColors.textMuted),
             ),
-            validator: (v) => v!.isEmpty ? 'Informe o e-mail' : null,
+            validator: (v) {
+              if (v!.trim().isEmpty) return 'Informe o e-mail';
+              if (!RegExp(r'^[\w.-]+@[\w.-]+\.[a-z]{2,}$').hasMatch(v.trim())) return 'E-mail inválido';
+              return null;
+            },
           ),
           const SizedBox(height: 16),
           TextFormField(
@@ -154,7 +157,11 @@ class _LoginScreenState extends State<LoginScreen> {
                 onPressed: () => setState(() => _obscure = !_obscure),
               ),
             ),
-            validator: (v) => v!.isEmpty ? 'Informe a senha' : null,
+            validator: (v) {
+              if (v!.isEmpty) return 'Informe a senha';
+              if (v.length < 6) return 'A senha deve ter pelo menos 6 caracteres';
+              return null;
+            },
           ),
           const SizedBox(height: 12),
           Row(
