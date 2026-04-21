@@ -233,6 +233,34 @@ cinebox/
 
 ---
 
+## 📸 Screenshots
+
+### 🏠 Tela Inicial
+![Início](./.github/screenshots/Inicio.jpeg)
+
+### 🎬 Catálogo
+![Catálogo](./.github/screenshots/Catalogo.jpeg)
+
+### 🎞️ Detalhes do Filme
+![Detalhes](./.github/screenshots/Detalhes.jpeg)
+
+### ▶️ Trailer
+![Trailer](./.github/screenshots/Trailer.jpeg)
+
+### 💳 Planos de Assinatura
+![Planos](./.github/screenshots/Planos.jpeg)
+
+### 🔐 Login
+![Login](./.github/screenshots/Login.jpeg)
+
+### 📝 Cadastro — Passo 1
+![Cadastro Passo 1](./.github/screenshots/CadastroPasso1.jpeg)
+
+### 📝 Cadastro — Passo 2
+![Cadastro Passo 2](./.github/screenshots/CadastroPasso2.jpeg)
+
+---
+
 ## 🎨 Design System
 
 ### Paleta de Cores
