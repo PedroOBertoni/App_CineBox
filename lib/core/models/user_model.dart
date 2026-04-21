@@ -2,14 +2,14 @@ class UserModel {
   final String uid;
   final String name;
   final String email;
-  final String planId;
+  final String plan;
   final DateTime createdAt;
 
   UserModel({
     required this.uid,
     required this.name,
     required this.email,
-    required this.planId,
+    required this.plan,
     required this.createdAt,
   });
 
@@ -18,7 +18,7 @@ class UserModel {
       uid: uid,
       name: map['name'] ?? '',
       email: map['email'] ?? '',
-      planId: map['planId'] ?? 'basic',
+      plan: map['plan'] ?? 'basic',
       createdAt: (map['createdAt'] as dynamic)?.toDate() ?? DateTime.now(),
     );
   }
@@ -26,7 +26,7 @@ class UserModel {
   Map<String, dynamic> toMap() => {
     'name': name,
     'email': email,
-    'planId': planId,
+    'plan': plan,
     'createdAt': createdAt,
   };
 }

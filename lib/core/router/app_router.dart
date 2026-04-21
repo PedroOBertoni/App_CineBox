@@ -26,7 +26,8 @@ final appRouter = GoRouter(
         state.matchedLocation.startsWith('/select-plan');
 
     if (!isAuth && !isAuthRoute) return '/login';
-    if (isAuth && isAuthRoute) return '/home';
+    if (isAuth && state.matchedLocation == '/login') return '/home';
+    if (isAuth && state.matchedLocation == '/register') return '/home';
     return null;
   },
   routes: [
@@ -37,9 +38,9 @@ final appRouter = GoRouter(
       builder: (_, state) {
         final extra = state.extra as Map<String, String>?;
         return SelectPlanScreen(
-          name: extra?['name'] ?? '',
-          email: extra?['email'] ?? '',
-          password: extra?['password'] ?? '',
+          name: extra?['name'],
+          email: extra?['email'],
+          password: extra?['password'],
         );
       },
     ),

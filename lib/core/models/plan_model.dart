@@ -1,11 +1,11 @@
 class PlanModel {
   static final List<PlanModel> defaults = [
     PlanModel(id: 'basic', name: 'Básico', price: 18.90, quality: 'HD', screens: 1, downloads: false,
-        features: ['Qualidade HD', '1 tela simultânea', 'Acesso ao catálogo completo']),
-    PlanModel(id: 'standard', name: 'Padrão', price: 29.90, quality: 'Full HD', screens: 2, downloads: true,
-        features: ['Qualidade Full HD', '2 telas simultâneas', 'Downloads disponíveis', 'Acesso ao catálogo completo']),
-    PlanModel(id: 'premium', name: 'Premium', price: 45.90, quality: '4K Ultra HD', screens: 4, downloads: true,
-        features: ['Qualidade 4K Ultra HD', '4 telas simultâneas', 'Downloads ilimitados', 'Acesso antecipado a lançamentos', 'Acesso ao catálogo completo']),
+        features: ['Acesso ao catálogo completo', 'Qualidade HD (720p)', '1 tela simultânea', 'Suporte padrão']),
+    PlanModel(id: 'standard', name: 'Padrão', price: 28.90, quality: 'Full HD', screens: 2, downloads: true,
+        features: ['Acesso ao catálogo completo', 'Qualidade Full HD (1080p)', '2 telas simultâneas', 'Downloads offline', 'Suporte prioritário 24h']),
+    PlanModel(id: 'premium', name: 'Premium', price: 39.90, quality: '4K Ultra HD', screens: 4, downloads: true,
+        features: ['Acesso ao catálogo completo', 'Qualidade 4K Ultra HD', '4 telas simultâneas', 'Downloads offline ilimitados', 'Lançamentos antecipados', 'Suporte prioritário 24h']),
   ];
   final String id;
   final String name;

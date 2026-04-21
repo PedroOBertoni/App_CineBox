@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import '../../core/services/auth_service.dart';
 import '../../core/theme/app_theme.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -17,6 +18,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final _confirmCtrl = TextEditingController();
   bool _obscurePass = true;
   bool _obscureConfirm = true;
+  bool _loadingGoogle = false;
+  final _auth = AuthService();
 
   @override
   void dispose() {
@@ -25,6 +28,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
     _passCtrl.dispose();
     _confirmCtrl.dispose();
     super.dispose();
+  }
+
+  Future<void> _signUpWithGoogle() async {
+    setState(() => _loadingGoogle = true);
+    final result = await _auth.signInWithGoogle(rememberMe: true);
+    if (!mounted) return;
+    if (result == 'cancelled') { setState(() => _loadingGoogle = false); return; }
+    if (result == 'NEW_USER' || result == null) {
+      context.go('/select-plan');
+      return;
+    }
+    setState(() => _loadingGoogle = false);
   }
 
   void _next() {
@@ -176,6 +191,32 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   SizedBox(width: 8),
                   Icon(Icons.arrow_forward, size: 18),
                 ],
+              ),
+            ),
+          ),
+          const SizedBox(height: 12),
+          const Row(
+            children: [
+              Expanded(child: Divider(color: Color(0xFF2D3748))),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 12),
+                child: Text('ou', style: TextStyle(color: AppColors.textMuted, fontSize: 13)),
+              ),
+              Expanded(child: Divider(color: Color(0xFF2D3748))),
+            ],
+          ),
+          const SizedBox(height: 12),
+          SizedBox(
+            height: 48,
+            child: OutlinedButton.icon(
+              onPressed: _loadingGoogle ? null : _signUpWithGoogle,
+              icon: _loadingGoogle
+                  ? const SizedBox(width: 18, height: 18, child: CircularProgressIndicator(strokeWidth: 2, color: AppColors.textPrimary))
+                  : const Icon(Icons.g_mobiledata_rounded, size: 24, color: AppColors.textPrimary),
+              label: const Text('Cadastrar com Google', style: TextStyle(color: AppColors.textPrimary)),
+              style: OutlinedButton.styleFrom(
+                side: const BorderSide(color: Color(0xFF2D3748)),
+                backgroundColor: AppColors.surfaceVariant,
               ),
             ),
           ),

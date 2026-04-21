@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:go_router/go_router.dart';
 import '../../core/models/plan_model.dart';
 import '../../core/services/auth_service.dart';
@@ -6,16 +7,19 @@ import '../../core/services/firestore_service.dart';
 import '../../core/theme/app_theme.dart';
 
 class SelectPlanScreen extends StatefulWidget {
-  final String name;
-  final String email;
-  final String password;
+  // Nulos quando vem do Google Sign In
+  final String? name;
+  final String? email;
+  final String? password;
 
   const SelectPlanScreen({
     super.key,
-    required this.name,
-    required this.email,
-    required this.password,
+    this.name,
+    this.email,
+    this.password,
   });
+
+  bool get isGoogleUser => name == null && email == null && password == null;
 
   @override
   State<SelectPlanScreen> createState() => _SelectPlanScreenState();
@@ -37,20 +41,28 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
   }
 
   Future<void> _loadPlans() async {
-    // Usa planos locais imediatamente, sem depender do Firestore
     if (mounted) setState(() { _plans = PlanModel.defaults; _loadingPlans = false; });
-    // Tenta seed em background para uso futuro
     try { await _firestore.seedPlans(); } catch (_) {}
   }
 
-  Future<void> _register() async {
+  Future<void> _confirm() async {
     setState(() { _loading = true; _error = null; });
-    final err = await _auth.register(
-      name: widget.name,
-      email: widget.email,
-      password: widget.password,
-      planId: _selectedPlanId,
-    );
+
+    String? err;
+    if (widget.isGoogleUser) {
+      // Usuário Google: só atualiza o planId no Firestore
+      final uid = FirebaseAuth.instance.currentUser?.uid;
+      if (uid != null) err = await _auth.updatePlan(uid, _selectedPlanId);
+    } else {
+      // Cadastro normal: cria conta e salva tudo
+      err = await _auth.register(
+        name: widget.name!,
+        email: widget.email!,
+        password: widget.password!,
+        plan: _selectedPlanId,
+      );
+    }
+
     if (!mounted) return;
     if (err != null) {
       setState(() { _error = err; _loading = false; });
@@ -121,10 +133,10 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
                               width: double.infinity,
                               height: 50,
                               child: ElevatedButton(
-                                onPressed: _loading ? null : _register,
+                                onPressed: _loading ? null : _confirm,
                                 child: _loading
                                     ? const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2))
-                                    : const Text('Criar Conta e Começar'),
+                                    : const Text('Confirmar e Começar'),
                               ),
                             ),
                           ],

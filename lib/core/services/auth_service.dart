@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../models/user_model.dart';
 
@@ -21,7 +22,7 @@ class AuthService {
     required String name,
     required String email,
     required String password,
-    required String planId,
+    required String plan,
   }) async {
     try {
       final cred = await _auth.createUserWithEmailAndPassword(
@@ -32,9 +33,9 @@ class AuthService {
       await _db.collection('users').doc(cred.user!.uid).set({
         'name': name,
         'email': email,
-        'planId': planId,
+        'plan': plan,
         'createdAt': FieldValue.serverTimestamp(),
-      });
+      }, SetOptions(merge: true));
       return null;
     } on FirebaseAuthException catch (e) {
       return _authError(e.code);
@@ -58,15 +59,56 @@ class AuthService {
     }
   }
 
+  // Retorna null em sucesso, 'NEW_USER' se for primeiro acesso, ou mensagem de erro
+  Future<String?> signInWithGoogle({required bool rememberMe}) async {
+    try {
+      final googleUser = await GoogleSignIn().signIn();
+      if (googleUser == null) return 'cancelled';
+
+      final googleAuth = await googleUser.authentication;
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
+
+      final cred = await _auth.signInWithCredential(credential);
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setBool('rememberMe', rememberMe);
+
+      // Verifica se é novo usuário
+      final doc = await _db.collection('users').doc(cred.user!.uid).get();
+      if (!doc.exists) {
+        await _db.collection('users').doc(cred.user!.uid).set({
+          'name': cred.user!.displayName ?? googleUser.displayName ?? '',
+          'email': cred.user!.email ?? '',
+          'plan': '',
+          'createdAt': FieldValue.serverTimestamp(),
+        }, SetOptions(merge: true));
+        return 'NEW_USER';
+      }
+
+      // Usuário existente — verifica se ainda não escolheu plano
+      final plan = doc.data()?['plan'] ?? '';
+      if (plan.isEmpty) return 'NEW_USER';
+
+      return null;
+    } on FirebaseAuthException catch (e) {
+      return _authError(e.code);
+    } catch (e) {
+      return 'Erro inesperado. Tente novamente.';
+    }
+  }
+
   Future<void> logout() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.remove('rememberMe');
+    await GoogleSignIn().signOut();
     await _auth.signOut();
   }
 
-  Future<String?> updatePlan(String uid, String planId) async {
+  Future<String?> updatePlan(String uid, String plan) async {
     try {
-      await _db.collection('users').doc(uid).update({'planId': planId});
+      await _db.collection('users').doc(uid).update({'plan': plan});
       return null;
     } catch (e) {
       return 'Erro ao atualizar plano.';

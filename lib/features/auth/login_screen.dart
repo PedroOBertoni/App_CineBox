@@ -18,6 +18,7 @@ class _LoginScreenState extends State<LoginScreen> {
   bool _rememberMe = false;
   bool _obscure = true;
   bool _loading = false;
+  bool _loadingGoogle = false;
   String? _error;
 
   @override
@@ -25,6 +26,19 @@ class _LoginScreenState extends State<LoginScreen> {
     _emailCtrl.dispose();
     _passCtrl.dispose();
     super.dispose();
+  }
+
+  Future<void> _loginWithGoogle() async {
+    setState(() { _loadingGoogle = true; _error = null; });
+    final result = await _auth.signInWithGoogle(rememberMe: _rememberMe);
+    if (!mounted) return;
+    if (result == null) return; // sucesso, router redireciona
+    if (result == 'cancelled') { setState(() => _loadingGoogle = false); return; }
+    if (result == 'NEW_USER') {
+      context.go('/select-plan');
+      return;
+    }
+    setState(() { _error = result; _loadingGoogle = false; });
   }
 
   Future<void> _login() async {
@@ -188,6 +202,32 @@ class _LoginScreenState extends State<LoginScreen> {
               child: _loading
                   ? const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2))
                   : const Text('Entrar'),
+            ),
+          ),
+          const SizedBox(height: 12),
+          const Row(
+            children: [
+              Expanded(child: Divider(color: Color(0xFF2D3748))),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 12),
+                child: Text('ou', style: TextStyle(color: AppColors.textMuted, fontSize: 13)),
+              ),
+              Expanded(child: Divider(color: Color(0xFF2D3748))),
+            ],
+          ),
+          const SizedBox(height: 12),
+          SizedBox(
+            height: 48,
+            child: OutlinedButton.icon(
+              onPressed: (_loading || _loadingGoogle) ? null : _loginWithGoogle,
+              icon: _loadingGoogle
+                  ? const SizedBox(width: 18, height: 18, child: CircularProgressIndicator(strokeWidth: 2, color: AppColors.textPrimary))
+                  : const Icon(Icons.g_mobiledata_rounded, size: 24, color: AppColors.textPrimary),
+              label: const Text('Continuar com Google', style: TextStyle(color: AppColors.textPrimary)),
+              style: OutlinedButton.styleFrom(
+                side: const BorderSide(color: Color(0xFF2D3748)),
+                backgroundColor: AppColors.surfaceVariant,
+              ),
             ),
           ),
           const SizedBox(height: 20),
