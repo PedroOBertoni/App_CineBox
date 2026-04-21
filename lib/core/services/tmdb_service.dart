@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import '../models/movie_model.dart';
 
 class TmdbService {
-  static const _apiKey = 'SUA_TMDB_API_KEY';
+  static const _apiKey = '9f3ba4a520742f48d933be2e61a66134';
   static const _base = 'https://api.themoviedb.org/3';
   static const _lang = 'pt-BR';
 
