@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../core/services/auth_service.dart';
 import '../../core/theme/app_theme.dart';
+import '../../shared/widgets/cinebox_logo.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -96,7 +97,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         const Spacer(),
         const Row(
           children: [
-            Icon(Icons.play_circle_fill, color: AppColors.primary, size: 28),
+            CineBoxLogo(size: 32),
             SizedBox(width: 8),
             Text('CineBox', style: TextStyle(color: AppColors.textPrimary, fontSize: 22, fontWeight: FontWeight.bold)),
           ],

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../core/services/auth_service.dart';
 import '../../core/theme/app_theme.dart';
+import '../../shared/widgets/cinebox_logo.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -94,16 +95,8 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget _buildLogo() {
     return Column(
       children: [
-        Container(
-          padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
-            color: AppColors.primary.withOpacity(0.15),
-            shape: BoxShape.circle,
-            border: Border.all(color: AppColors.primary.withOpacity(0.3)),
-          ),
-          child: const Icon(Icons.play_circle_fill, color: AppColors.primary, size: 48),
-        ),
-        const SizedBox(height: 12),
+        const CineBoxLogo(size: 56),
+        const SizedBox(height: 16),
         const Text(
           'CineBox',
           style: TextStyle(

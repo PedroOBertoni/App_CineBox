@@ -5,6 +5,7 @@ import '../../core/models/plan_model.dart';
 import '../../core/services/auth_service.dart';
 import '../../core/services/firestore_service.dart';
 import '../../core/theme/app_theme.dart';
+import '../../shared/widgets/cinebox_logo.dart';
 
 class SelectPlanScreen extends StatefulWidget {
   // Nulos quando vem do Google Sign In
@@ -162,7 +163,7 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
           const Spacer(),
           const Row(
             children: [
-              Icon(Icons.play_circle_fill, color: AppColors.primary, size: 24),
+              CineBoxLogo(size: 30),
               SizedBox(width: 6),
               Text('CineBox', style: TextStyle(color: AppColors.textPrimary, fontSize: 18, fontWeight: FontWeight.bold)),
             ],

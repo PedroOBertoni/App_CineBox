@@ -462,15 +462,15 @@ class _PlansScreenState extends State<PlansScreen> {
                           child: Row(
                             children: [
                               Icon(f.$2 ? Icons.check_rounded : Icons.close_rounded,
-                                  size: 15, color: f.$2 ? color : const Color(0xFF334155)),
+                                  size: 15, color: f.$2 ? color : const Color(0xFF64748B)),
                               const SizedBox(width: 8),
                               Expanded(
                                 child: Text(f.$1,
                                   style: TextStyle(
-                                    color: f.$2 ? const Color(0xFFCBD5E1) : const Color(0xFF334155),
+                                    color: f.$2 ? const Color(0xFFCBD5E1) : const Color(0xFF64748B),
                                     fontSize: 12,
                                     decoration: f.$2 ? TextDecoration.none : TextDecoration.lineThrough,
-                                    decorationColor: const Color(0xFF334155),
+                                    decorationColor: const Color(0xFF64748B),
                                   ),
                                 ),
                               ),

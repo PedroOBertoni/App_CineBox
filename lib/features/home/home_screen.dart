@@ -6,6 +6,7 @@ import '../../core/models/movie_model.dart';
 import '../../core/services/auth_service.dart';
 import '../../core/services/tmdb_service.dart';
 import '../../core/theme/app_theme.dart';
+import '../../shared/widgets/cinebox_logo.dart';
 import '../../shared/widgets/movie_section.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -100,7 +101,7 @@ class _HomeScreenState extends State<HomeScreen> {
       backgroundColor: AppColors.background.withOpacity(0.95),
       title: Row(
         children: [
-          const Icon(Icons.play_circle_fill, color: AppColors.primary, size: 28),
+          const CineBoxLogo(size: 32),
           const SizedBox(width: 8),
           const Text('CineBox', style: TextStyle(color: AppColors.textPrimary, fontWeight: FontWeight.bold, fontSize: 20)),
           const Spacer(),
