@@ -235,29 +235,40 @@ cinebox/
 
 ## 📸 Screenshots
 
-### 🏠 Tela Inicial
-![Início](./.github/screenshots/Inicio.jpeg)
-
-### 🎬 Catálogo
-![Catálogo](./.github/screenshots/Catalogo.jpeg)
-
-### 🎞️ Detalhes do Filme
-![Detalhes](./.github/screenshots/Detalhes.jpeg)
-
-### ▶️ Trailer
-![Trailer](./.github/screenshots/Trailer.jpeg)
-
-### 💳 Planos de Assinatura
-![Planos](./.github/screenshots/Planos.jpeg)
-
-### 🔐 Login
-![Login](./.github/screenshots/Login.jpeg)
-
-### 📝 Cadastro — Passo 1
-![Cadastro Passo 1](./.github/screenshots/CadastroPasso1.jpeg)
-
-### 📝 Cadastro — Passo 2
-![Cadastro Passo 2](./.github/screenshots/CadastroPasso2.jpeg)
+<table>
+  <tr>
+    <td align="center"><strong>🏠 Tela Inicial</strong></td>
+    <td align="center"><strong>🎬 Catálogo</strong></td>
+  </tr>
+  <tr>
+    <td><img src="./.github/screenshots/Inicio.jpeg" width="100%"/></td>
+    <td><img src="./.github/screenshots/Catalogo.jpeg" width="100%"/></td>
+  </tr>
+  <tr>
+    <td align="center"><strong>🎞️ Detalhes do Filme</strong></td>
+    <td align="center"><strong>▶️ Trailer</strong></td>
+  </tr>
+  <tr>
+    <td><img src="./.github/screenshots/Detalhes.jpeg" width="100%"/></td>
+    <td><img src="./.github/screenshots/Trailer.jpeg" width="100%"/></td>
+  </tr>
+  <tr>
+    <td align="center"><strong>💳 Planos de Assinatura</strong></td>
+    <td align="center"><strong>🔐 Login</strong></td>
+  </tr>
+  <tr>
+    <td><img src="./.github/screenshots/Planos.jpeg" width="100%"/></td>
+    <td><img src="./.github/screenshots/Login.jpeg" width="100%"/></td>
+  </tr>
+  <tr>
+    <td align="center"><strong>📝 Cadastro — Passo 1</strong></td>
+    <td align="center"><strong>📝 Cadastro — Passo 2</strong></td>
+  </tr>
+  <tr>
+    <td><img src="./.github/screenshots/CadastroPasso1.jpeg" width="100%"/></td>
+    <td><img src="./.github/screenshots/CadastroPasso2.jpeg" width="100%"/></td>
+  </tr>
+</table>
 
 ---
 
